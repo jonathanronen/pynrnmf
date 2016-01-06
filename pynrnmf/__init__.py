@@ -35,8 +35,9 @@ class NRNMF:
         """
         self.k = k
         self.W = W
-        if W:
+        if W is not None:
             self.D = sparse.coo_matrix(np.diagflat(W.sum(axis=1)))
+            self.L = self.D - self.W
         self.alpha = alpha
         self.init = init
         self.n_inits = n_inits
@@ -46,10 +47,9 @@ class NRNMF:
     def _init(self, X):
         if self.init == 'random':
             U = np.random.random((X.shape[0], self.k))
-            V = np.random.random((self.k, X.shape[1]))
+            V = np.random.random((X.shape[1], self.k))
         else:
             raise NotImplementedError("Don't know the '{}' init method. Must be 'random'".format(self.init))
-        # return W, H
         return U,V
 
     def _update(self, U, V, X, alpha):
@@ -65,17 +65,18 @@ class NRNMF:
 
 
     def _error(self, U, V, X):
-        return np.linalg.norm(X - U.dot(V.T))
+        return np.linalg.norm(X - U.dot(V.T)) + self.alpha * np.trace(V.T.dot(self.L).dot(V))
 
     def fit_transform(self, X):
         """
-        Fits the model to the data matrix X, and returns the decomposition W, H.
+        Fits the model to the data matrix X, and returns the decomposition U, V.
         """
         if self.k is None:
             self.k = X.shape[1]
         if self.W is None:
             self.W = np.eye(X.shape[1])
             self.D = np.eye(X.shape[1])
+            self.L = self.D - self.W
 
         U, V = self._init(X)
         for i in range(self.max_iter):
