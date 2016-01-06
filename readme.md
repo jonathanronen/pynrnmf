@@ -3,7 +3,7 @@ This is a Python implementation of a graph-regularized NMF algorithme from [1].
 
 See [example.py](example.py) for an illustration.
 
-[1]:	[Non-negative Matrix Factorization on Manifold, D. Cai](https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=0ahUKEwiA2eHVyczJAhWG_A4KHQcyBkAQFggsMAE&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D4781101&usg=AFQjCNGL7cbPUJX8Ng1jVZT_jXmjOsfP6Q&sig2=Wv3Vg_uuTQbbTCz8aBtBSA)
+[1]:	[Non-negative Matrix Factorization on Manifold, D. Cai](http://dx.doi.org/10.1109/ICDM.2008.57)
 
 -----------------------
 [@jonathanronen](https://github.com/jonathanronen), [Berlin Institute of Medical Systems Biology](https://www.mdc-berlin.de/bimsb), 2015
