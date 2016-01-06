@@ -3,6 +3,12 @@ This is a Python implementation of a graph-regularized NMF algorithme from [1].
 
 See [example.py](example.py) or [example.ipynb](example.ipynb) for an illustration.
 
+### Installation
+
+    python setup.py install
+
+--------------------
+
 [1]:	[Non-negative Matrix Factorization on Manifold, D. Cai](http://dx.doi.org/10.1109/ICDM.2008.57)
 
 -----------------------

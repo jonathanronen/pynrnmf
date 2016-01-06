@@ -22,7 +22,7 @@ U, V = model.fit_transform(F)
 model_lowalpha = NRNMF(k=2, W=W, alpha=100, init='random', n_inits=10, max_iter=10000)
 U_la, V_la = model_lowalpha.fit_transform(F)
 
-model_noreg = NRNMF(k=2, W=W, alpha=100, init='random', n_inits=10, max_iter=5000)
+model_noreg = NRNMF(k=2, W=W, alpha=0, init='random', n_inits=10, max_iter=5000)
 U_nr, V_nr = model_noreg.fit_transform(F)
 
 print("Reconstruction error with high regularization: {}".format(np.linalg.norm(F-U.dot(V.T))))
