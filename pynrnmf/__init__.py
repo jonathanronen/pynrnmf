@@ -23,7 +23,7 @@ class NRNMF:
     [1]: Non-negative Matrix Factorization on Manifold, Cai et al, ICDM 2008
          http://dx.doi.org/10.1109/ICDM.2008.57
     """
-    def __init__(self, k=None, W=None, alpha=100, init='random', n_inits=100, tol=1e-3, max_iter=1000):
+    def __init__(self, k=None, W=None, alpha=100, init='random', n_inits=1, tol=1e-3, max_iter=1000):
         """
             k:          number of components
             W:          Adjacency matrix of the nearest neighboor matrix
@@ -78,10 +78,19 @@ class NRNMF:
             self.D = np.eye(X.shape[1])
             self.L = self.D - self.W
 
-        U, V = self._init(X)
-        for i in range(self.max_iter):
-            U, V = self._update(U, V, X, self.alpha)
-            if self._error(U, V, X) < self.tol:
-                return U, V
-        warn("Did not converge. Error is {} after {} iterations.".format(self._error(U, V, X), i+1))
-        return U, V
+        best_results = {"e": np.inf, "U": None, "V": None}
+        for x in range(self.n_inits):
+            U, V = self._init(X)
+            conv = False
+            for x in range(self.max_iter):
+                Un, Vn = self._update(U, V, X, self.alpha)
+                e = np.linalg.norm(U-Un)
+                U,V = Un,Vn
+                if e < self.tol:
+                    conv = True
+                    break
+            if self._error(U, V, X) < best_results["e"]:
+                best_results = {"e": self._error(U, V, X), "U": U, "V": V}
+        if not conv:
+            warn("None of {} runs converged after {} iterations each. Try increasing `max_iter`.".format(self.n_inits, self.max_iter))
+        return best_results["U"], best_results["V"]
