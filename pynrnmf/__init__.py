@@ -4,7 +4,12 @@ from warnings import warn
 
 class NRNMF:
     """
-    Performs Network-regularized Non-Negative matrix factorization
+    Performs Network-regularized Non-Negative matrix factorization.
+
+    Implements algorithm from [1].
+
+    [1]: Non-negative Matrix Factorization on Manifold, Cai et al, ICDM 2008
+         http://dx.doi.org/10.1109/ICDM.2008.57
     """
     def __init__(self, k=None, A=None, alpha=100, init='random', n_inits=100, tol=1e-3, max_iter=100):
         """
@@ -49,6 +54,9 @@ class NRNMF:
         return np.linalg.norm(X - W.dot(H.T))
 
     def fit_transform(self, X):
+        """
+        Fits the model to the data matrix X, and returns the decomposition W, H.
+        """
         if self.k is None:
             self.k = X.shape[1]
         if self.A is None:
