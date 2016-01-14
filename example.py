@@ -16,13 +16,13 @@ F = np.random.random((6,4))
 # Adjacency matrix has two network modules (two connected components)
 W = np.array([[0,1,0,0], [1,0,0,0], [0,0,0,1], [0,0,1,0]])
 
-model = NRNMF(k=2, W=W, alpha=10000, init='random', n_inits=10, max_iter=20000)
+model = NRNMF(k=2, W=W, alpha=10000, init='random', n_inits=10, max_iter=50000, n_jobs=4)
 U, V = model.fit_transform(F)
 
-model_lowalpha = NRNMF(k=2, W=W, alpha=100, init='random', n_inits=10, max_iter=10000)
+model_lowalpha = NRNMF(k=2, W=W, alpha=100, init='random', n_inits=10, max_iter=10000, n_jobs=4)
 U_la, V_la = model_lowalpha.fit_transform(F)
 
-model_noreg = NRNMF(k=2, W=W, alpha=0, init='random', n_inits=10, max_iter=5000)
+model_noreg = NRNMF(k=2, W=W, alpha=0, init='random', n_inits=10, max_iter=5000, n_jobs=4)
 U_nr, V_nr = model_noreg.fit_transform(F)
 
 print("Reconstruction error with high regularization: {}".format(np.linalg.norm(F-U.dot(V.T))))

@@ -10,6 +10,7 @@ setup(name='pynrnmf',
       packages=['pynrnmf'],
       install_requires=[
           'numpy',
-          'scipy'
+          'scipy',
+          'joblib'
       ]
      )
