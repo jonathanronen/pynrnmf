@@ -69,7 +69,7 @@ class NRNMF:
 
 
     def _error(self, U, V, X):
-        return linalg.norm(X - U.dot(V.T)) + self.alpha * np.trace(V.T.dot(self.L).dot(V))
+        return linalg.norm(X - U.dot(V.T)) + self.alpha * np.trace(V.T * self.L * V)
 
     def _fit(self, X):
         U, V = self._init(X)
