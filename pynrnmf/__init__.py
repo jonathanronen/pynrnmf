@@ -1,6 +1,6 @@
 import numpy as np
-from scipy import sparse
 from warnings import warn
+from scipy import sparse, linalg
 from joblib import Parallel, delayed
 
 class NRNMF:
@@ -69,14 +69,14 @@ class NRNMF:
 
 
     def _error(self, U, V, X):
-        return np.linalg.norm(X - U.dot(V.T)) + self.alpha * np.trace(V.T.dot(self.L).dot(V))
+        return linalg.norm(X - U.dot(V.T)) + self.alpha * np.trace(V.T.dot(self.L).dot(V))
 
     def _fit(self, X):
         U, V = self._init(X)
         conv = False
         for x in range(self.max_iter):
             Un, Vn = self._update(U, V, X, self.alpha)
-            e = np.linalg.norm(U-Un)
+            e = linalg.norm(U-Un)
             U, V = Un, Vn
             if e < self.tol:
                 conv = True

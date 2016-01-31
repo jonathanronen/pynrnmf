@@ -8,6 +8,7 @@ in the NMF representation.
 """
 
 import numpy as np
+from scipy import linalg
 from pynrnmf import NRNMF
 
 # Data matrix has 4 6-dimensional points
