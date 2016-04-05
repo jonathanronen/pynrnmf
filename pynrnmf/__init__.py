@@ -83,7 +83,7 @@ class NRNMF:
                 break
         return {
             'conv': conv,
-            'e': self._error(U, V, X),
+            'e': e,
             'U': U,
             'V': V
         }
